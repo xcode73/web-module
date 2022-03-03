@@ -5,8 +5,9 @@
 //  Created by Tibor Bodecs on 2021. 11. 23..
 //
 
-@_exported import WebRestKit
 @_exported import Feather
+@_exported import FeatherApi
+@_exported import WebApi
 
 struct WebModule: FeatherModule {
     

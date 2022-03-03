@@ -6,6 +6,6 @@
 //
 
 import Foundation
-import FeatherRestKit
+import FeatherApi
 
 public enum Web: FeatherApiModule {}
