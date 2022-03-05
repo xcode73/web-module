@@ -11,9 +11,8 @@ let package = Package(
         .library(name: "WebApi", targets: ["WebApi"]),
     ],
     dependencies: [
-//        .package(url: "https://github.com/feathercms/feather-core", .branch("dev")),
-        .package(path: "../feather-core"),
-        .package(path: "../feather-api"),
+        .package(url: "https://github.com/feathercms/feather-core", .branch("dev")),
+        .package(url: "https://github.com/feathercms/feather-api", .branch("main")),
         .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
         .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.3.0"),
         .package(url: "https://github.com/binarybirds/swift-html", from: "1.6.0"),
