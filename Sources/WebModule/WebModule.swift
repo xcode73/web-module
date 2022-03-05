@@ -116,7 +116,7 @@ struct WebModule: FeatherModule {
         try await homePage.publishMetadataAsHome(args.req)
     }
 
-    func installUserPermissionsHook(args: HookArguments) -> [FeatherApi.System.Permission.Create] {
+    func installUserPermissionsHook(args: HookArguments) -> [FeatherPermission.Create] {
         var permissions = Web.availablePermissions()
         permissions += Web.Page.availablePermissions()
         permissions += Web.Menu.availablePermissions()
@@ -125,7 +125,7 @@ struct WebModule: FeatherModule {
     }
 
     
-    func installCommonVariablesHook(args: HookArguments) -> [FeatherApi.System.Variable.Create] {
+    func installCommonVariablesHook(args: HookArguments) -> [FeatherVariable.Create] {
         [
             .init(key: "webSiteNoIndex",
                   name: "Disable site index",
