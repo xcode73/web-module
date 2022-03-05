@@ -5,6 +5,10 @@
 //  Created by Tibor Bodecs on 2021. 11. 30..
 //
 
+import Vapor
+import Feather
+import Fluent
+
 fileprivate let scope = "web.menus"
 
 extension Request {

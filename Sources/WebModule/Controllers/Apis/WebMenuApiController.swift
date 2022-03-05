@@ -5,6 +5,11 @@
 //  Created by Tibor Bodecs on 2021. 12. 06..
 //
 
+import Vapor
+import Feather
+import Fluent
+import WebApi
+
 extension Web.Menu.List: Content {}
 extension Web.Menu.Detail: Content {}
 

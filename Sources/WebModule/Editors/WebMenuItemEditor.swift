@@ -5,6 +5,9 @@
 //  Created by Tibor Bodecs on 2021. 12. 06..
 //
 
+import Vapor
+import Feather
+
 struct WebMenuItemEditor: FeatherModelEditor {
     let model: WebMenuItemModel
     let form: AbstractForm

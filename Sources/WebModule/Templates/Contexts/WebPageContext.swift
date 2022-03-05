@@ -5,6 +5,8 @@
 //  Created by Tibor Bodecs on 2021. 12. 18..
 //
 
+import WebApi
+
 public struct WebPageContext {
     public var page: Web.Page.Detail
     

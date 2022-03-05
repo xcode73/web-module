@@ -5,6 +5,8 @@
 //  Created by Tibor Bodecs on 2022. 02. 23..
 //
 
+import Feather
+
 @_cdecl("createWebModule")
 public func createWebModule() -> UnsafeMutableRawPointer {
     return Unmanaged.passRetained(WebBuilder()).toOpaque()

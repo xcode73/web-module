@@ -5,9 +5,11 @@
 //  Created by Tibor Bodecs on 2021. 11. 23..
 //
 
-@_exported import Feather
-@_exported import FeatherApi
-@_exported import WebApi
+import Vapor
+import Fluent
+import Feather
+import FeatherApi
+import WebApi
 
 struct WebModule: FeatherModule {
     

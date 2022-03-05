@@ -5,6 +5,9 @@
 //  Created by Tibor Bodecs on 2022. 03. 03..
 //
 
+import Vapor
+import Feather
+
 struct WebPageRepository: FeatherModelRepository {
     typealias DatabaseModel = WebPageModel
 
