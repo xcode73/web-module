@@ -29,6 +29,24 @@
         }
       },
       {
+        "package": "feather-api",
+        "repositoryURL": "https://github.com/feathercms/feather-api",
+        "state": {
+          "branch": "main",
+          "revision": "5f8dd68ce533d22412515354e832bf4fe6d7e415",
+          "version": null
+        }
+      },
+      {
+        "package": "feather-core",
+        "repositoryURL": "https://github.com/feathercms/feather-core",
+        "state": {
+          "branch": "dev",
+          "revision": "9eab76d54d5d9629f11949d5d503dcf09fb2254e",
+          "version": null
+        }
+      },
+      {
         "package": "feather-icons",
         "repositoryURL": "https://github.com/feathercms/feather-icons",
         "state": {
@@ -177,8 +195,8 @@
         "repositoryURL": "https://github.com/binarybirds/swift-html",
         "state": {
           "branch": null,
-          "revision": "01583519d963b52930508e8b99b05e85aeab1ca0",
-          "version": "1.6.6"
+          "revision": "b2620a6747fd664c892cfd20ff38d4c445bfa0d3",
+          "version": "1.6.8"
         }
       },
       {
@@ -249,8 +267,8 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "18e9419cae5049e43ca1e8002ca3cf0449f2c8ed",
-          "version": "4.55.0"
+          "revision": "e0fd4f3d76469dd6a0efb2be5c0b2f96b7581187",
+          "version": "4.55.1"
         }
       },
       {
