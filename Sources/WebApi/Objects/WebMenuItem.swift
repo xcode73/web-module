@@ -14,6 +14,7 @@ public extension Web {
         public typealias Module = Web
         
         public static var pathKey: String { "items" }
+        public static var permissionKey: String { "menu_item" }
     }
 }
 
