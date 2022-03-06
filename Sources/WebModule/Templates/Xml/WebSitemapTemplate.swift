@@ -21,7 +21,7 @@ final class WebSitemapTemplate: AbstractTemplate<WebSitemapContext> {
         UrlSet {
             for item in context.items {
                 Url {
-                    Loc(req.feather.baseUrl + item.slug.safePath())
+                    Loc(req.feather.publicUrl + item.slug.safePath())
                     LastMod(Self.formatter.string(from: item.date))
                 }
             }

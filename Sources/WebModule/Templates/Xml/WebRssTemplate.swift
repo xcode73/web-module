@@ -22,7 +22,7 @@ final class WebRssTemplate: AbstractTemplate<WebRssContext> {
             SwiftRss.Channel {
                 Title(req.variable("webSiteTitle") ?? "")
                 Description(req.variable("webSiteExcerpt") ?? "")
-                Link(req.feather.baseUrl)
+                Link(req.feather.publicUrl)
                 Language("en_US")
                 LastBuildDate(Self.formatter.string(from: .init()))
                 PubDate(Self.formatter.string(from: .init()))
@@ -30,7 +30,7 @@ final class WebRssTemplate: AbstractTemplate<WebRssContext> {
                 
                 for item in context.items {
                     Item {
-                        Guid(req.feather.baseUrl + item.slug.safePath())
+                        Guid(req.feather.publicUrl + item.slug.safePath())
                             .isPermalink()
                         Title(item.title ?? "")
                         Description(item.excerpt ?? "")

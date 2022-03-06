@@ -27,7 +27,7 @@ struct WebResponseController {
 
     func renderRobotsTemplate(_ req: Request) async throws -> Response {
         let robots = """
-            Sitemap: \(req.feather.baseUrl)\(req.feather.config.paths.sitemap.safePath())
+            Sitemap: \(req.feather.publicUrl)\(req.feather.config.paths.sitemap.safePath())
 
             User-agent: *
             Disallow: \(req.feather.config.paths.admin.safePath())
