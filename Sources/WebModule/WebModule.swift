@@ -85,7 +85,7 @@ struct WebModule: FeatherModule {
         try await footer3.create(on: args.req.db)
 
         try await [
-            WebMenuItemModel(label: "Admin", url: "/admin/", priority: 100, permission: "admin.module.detail", menuId: footer3.uuid),
+            WebMenuItemModel(label: "Admin", url: "/admin/", priority: 100, permission: "system.module.detail", menuId: footer3.uuid),
             WebMenuItemModel(label: "Sign in", url: "/login/", priority: 90, permission: "user.profile.login", menuId: footer3.uuid),
             WebMenuItemModel(label: "Sign out", url: "/logout/", priority: 90, permission: "user.profile.logout", menuId: footer3.uuid),
         ].create(on: args.req.db)
