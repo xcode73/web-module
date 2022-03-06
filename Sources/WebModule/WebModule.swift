@@ -84,7 +84,7 @@ struct WebModule: FeatherModule {
         ].create(on: args.req.db)
         
         let accountKey = "footer-account"
-        let footer3 = WebMenuModel(id: .init(), key: accountKey, name: "User", notes: nil)
+        let footer3 = WebMenuModel(id: .init(), key: accountKey, name: "Account", notes: nil)
         try await footer3.create(on: args.req.db)
         try await createMenuItems(args.req, key: accountKey, id: footer3.uuid)
         

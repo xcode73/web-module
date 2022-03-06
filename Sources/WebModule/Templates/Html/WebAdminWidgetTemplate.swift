@@ -19,6 +19,12 @@ struct WebAdminWidgetTemplate: TemplateRepresentable {
 
         H2("Web")
         Ul {
+            if req.checkPermission(Web.permission(for: .detail)) {
+                Li {
+                    A("Settings")
+                        .href("/admin/web/settings")
+                }
+            }
             if req.checkPermission(Web.Page.permission(for: .list)) {
                 Li {
                     A("Pages")

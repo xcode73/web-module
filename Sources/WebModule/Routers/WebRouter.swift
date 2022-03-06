@@ -7,7 +7,9 @@
 
 import Vapor
 import Feather
+import FeatherApi
 import WebApi
+
 
 struct WebRouter: FeatherRouter {
     
@@ -17,12 +19,26 @@ struct WebRouter: FeatherRouter {
     let menuApiController = WebMenuApiController()
     let menuItemAdminController = WebMenuItemAdminController()
     let menuItemApiController = WebMenuItemApiController()
+    let settingsController = WebSettingsAdminController()
+    let responseController = WebResponseController()
     
+    func boot(_ app: Application) throws {
+        app.routes.get(app.feather.config.paths.sitemap.pathComponent, use: responseController.renderSitemapTemplate)
+        app.routes.get(app.feather.config.paths.rss.pathComponent, use: responseController.renderRssTemplate)
+        app.routes.get(app.feather.config.paths.robots.pathComponent, use: responseController.renderRobotsTemplate)
+        app.routes.get(app.feather.config.paths.manifest.pathComponent, use: responseController.renderManifestFile)
+    }
+
     func adminRoutesHook(args: HookArguments) {
         pageAdminController.setUpRoutes(args.routes)
         menuAdminController.setUpRoutes(args.routes)
         menuItemAdminController.setUpRoutes(args.routes)
 
+        args.routes.group(Web.pathKey.pathComponent) { routes in
+            routes.get("settings", use: settingsController.settingsView)
+            routes.post("settings", use: settingsController.settings)
+        }
+        
         args.routes.get(Web.pathKey.pathComponent) { req -> Response in
             let tag = WebAdminWidgetTemplate().render(req)
             let template = SystemAdminModulePageTemplate(.init(title: "Web", tag: tag))
