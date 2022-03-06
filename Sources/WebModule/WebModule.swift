@@ -29,10 +29,8 @@ struct WebModule: FeatherModule {
         app.hooks.register(.apiRoutes, use: router.apiRoutesHook)
         app.hooks.register(.adminRoutes, use: router.adminRoutesHook)
         app.hooks.register(.adminWidgets, use: adminWidgetsHook)
-        app.hooks.register(.adminMiddlewares, use: adminMiddlewaresHook)
-        app.hooks.register(.webMiddlewares, use: webMiddlewaresHook)
-        app.hooks.register(.webMenu, use: webMenuHook)
         
+        app.hooks.registerAsync(.menu, use: menuHook)
         app.hooks.registerAsync(.install, use: installHook)
         app.hooks.registerAsync(.response, use: responseHook)
         
@@ -41,71 +39,71 @@ struct WebModule: FeatherModule {
 
     // MARK: - hooks
     
+    private func createMenuItems(_ req: Request, key: String, id: UUID) async throws {
+        var args1 = HookArguments()
+        args1["menu-key"] = key
+        let accountItems: [FeatherMenuItem] = req.invokeAllFlat(.installMenuItems, args: args1)
+
+        try await accountItems.map { item -> WebMenuItemModel in
+            .init(label: item.label,
+                  url: item.url,
+                  priority: item.priority,
+                  permission: item.permission,
+                  menuId: id)
+        }.create(on: req.db, chunks: 25)
+    }
+    
     func installHook(args: HookArguments) async throws {
         
-        let mainMenu = WebMenuModel(id: .init(), key: "main", name: "Main", notes: nil)
+        let mainKey = "main"
+        let mainMenu = WebMenuModel(id: .init(), key: mainKey, name: "Main", notes: nil)
         try await mainMenu.create(on: args.req.db)
-        
-        let aboutMenuItem = WebMenuItemModel(label: "About", url: "/about/", priority: 0, menuId: mainMenu.uuid)
-        try await aboutMenuItem.create(on: args.req.db)
-        
-        var arguments = HookArguments()
-        arguments["menuId"] = mainMenu.uuid
-        let menuItems: [Web.MenuItem.Create] = args.req.invokeAllFlat(.installWebMenuItems, args: arguments)
-        let items = menuItems.map { item -> WebMenuItemModel in
-            WebMenuItemModel(id: .init(),
-                             label: item.label,
-                             url: item.url,
-                             priority: item.priority,
-                             isBlank: item.isBlank,
-                             permission: item.permission,
-                             menuId: item.menuId)
-        }
-        try await items.create(on: args.req.db, chunks: 25)
-        
-        // MARK: footer
-        
-        let footer1 = WebMenuModel(id: .init(), key: "footer-1", name: "Navigation", notes: nil)
-        try await footer1.create(on: args.req.db)
+        try await createMenuItems(args.req, key: mainKey, id: mainMenu.uuid)
+        try await [
+            WebMenuItemModel(label: "About", url: "/about/", priority: 0, menuId: mainMenu.uuid)
+        ].create(on: args.req.db)
 
+        // MARK: - footer
+        
+        let navKey = "footer-nav"
+        let footer1 = WebMenuModel(id: .init(), key: navKey, name: "Navigation", notes: nil)
+        try await footer1.create(on: args.req.db)
+        try await createMenuItems(args.req, key: navKey, id: footer1.uuid)
         try await [
             WebMenuItemModel(label: "Home", url: "/", priority: 100, menuId: footer1.uuid),
             WebMenuItemModel(label: "About", url: "/about/", priority: 90, menuId: footer1.uuid),
         ].create(on: args.req.db)
         
-        let footer2 = WebMenuModel(id: .init(), key: "footer-2", name: "Feed", notes: nil)
+        let feedsKey = "footer-feeds"
+        let footer2 = WebMenuModel(id: .init(), key: feedsKey, name: "Feed", notes: nil)
         try await footer2.create(on: args.req.db)
-
+        try await createMenuItems(args.req, key: feedsKey, id: footer2.uuid)
         try await [
             WebMenuItemModel(label: "Sitemap", url: "/sitemap.xml", priority: 100, isBlank: true, menuId: footer2.uuid),
             WebMenuItemModel(label: "RSS", url: "/rss.xml", priority: 90, isBlank: true, menuId: footer2.uuid),
         ].create(on: args.req.db)
         
-        let footer3 = WebMenuModel(id: .init(), key: "footer-3", name: "User", notes: nil)
+        let accountKey = "footer-account"
+        let footer3 = WebMenuModel(id: .init(), key: accountKey, name: "User", notes: nil)
         try await footer3.create(on: args.req.db)
-
-        try await [
-            WebMenuItemModel(label: "Admin", url: "/admin/", priority: 100, permission: "system.module.detail", menuId: footer3.uuid),
-            WebMenuItemModel(label: "Sign in", url: "/login/", priority: 90, permission: "user.profile.login", menuId: footer3.uuid),
-            WebMenuItemModel(label: "Sign out", url: "/logout/", priority: 90, permission: "user.profile.logout", menuId: footer3.uuid),
-        ].create(on: args.req.db)
+        try await createMenuItems(args.req, key: accountKey, id: footer3.uuid)
         
-        let footer4 = WebMenuModel(id: .init(), key: "footer-4", name: "Links", notes: nil)
+        let linksKey = "footer-links"
+        let footer4 = WebMenuModel(id: .init(), key: linksKey, name: "Links", notes: nil)
         try await footer4.create(on: args.req.db)
-
+        try await createMenuItems(args.req, key: linksKey, id: footer4.uuid)
         try await [
             WebMenuItemModel(label: "Feather", url: "https://feathercms.com/", priority: 100, isBlank: true, menuId: footer4.uuid),
             WebMenuItemModel(label: "Vapor", url: "https://vapor.codes/", priority: 90, isBlank: true, menuId: footer4.uuid),
             WebMenuItemModel(label: "Swift", url: "https://swift.org/", priority: 90, isBlank: true, menuId: footer4.uuid),
         ].create(on: args.req.db)
-        
-        // MARK: pages
+
+        // MARK: - pages
 
         let pageItems: [Web.Page.Create] = args.req.invokeAllFlat(.installWebPages)
         let pages = pageItems.map { WebPageModel(title: $0.title, content: $0.content) }
         try await pages.create(on: args.req.db, chunks: 25)
         try await pages.forEachAsync { try await $0.publishMetadata(args.req) }
-        
         
         let aboutPage = WebPageModel(title: "About", content: Sample(WebModule.self, file: "About.html"))
         try await aboutPage.create(on: args.req.db)
@@ -123,7 +121,6 @@ struct WebModule: FeatherModule {
         permissions += Web.MenuItem.availablePermissions()
         return permissions.map { .init($0) }
     }
-
     
     func installCommonVariablesHook(args: HookArguments) -> [FeatherVariable.Create] {
         [
@@ -187,23 +184,16 @@ struct WebModule: FeatherModule {
         return args.req.templates.renderHtml(template)
     }
 
-    func webMiddlewaresHook(args: HookArguments) -> [Middleware] {
-        [
-            WebMenuMiddleware(),
-        ]
-    }
-    
-    func adminMiddlewaresHook(args: HookArguments) -> [Middleware] {
-        [
-            WebMenuMiddleware(),
-        ]
-    }
-    
-    func webMenuHook(args: HookArguments) -> MenuContext? {
-        guard let menuId = args["menu-id"] as? String else {
-            return nil
+    func menuHook(args: HookArguments) async throws -> [FeatherMenu] {
+        try await WebMenuModel.query(on: args.req.db).with(\.$items).all().map { menu in
+            .init(key: menu.key, name: menu.name, items: menu.items.map {
+                .init(label: $0.label,
+                      url: $0.url,
+                      priority: $0.priority,
+                      isBlank: $0.isBlank,
+                      permission: $0.permission)
+            })
         }
-        return args.req.menu(menuId)
     }
 
     func adminWidgetsHook(args: HookArguments) -> [TemplateRepresentable] {
