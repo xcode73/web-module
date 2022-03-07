@@ -13,13 +13,13 @@ public extension HookName {
     static let installWebMenuItems: HookName = "install-web-menu-items"
 
     /// return a HeaderContext.Action item to display an action next to the menu
-    static let webAction: HookName = "web-action"
+//    static let webAction: HookName = "web-action"
     
     /// reuturn a module name and provide the web assets under that module location `/img/[module]/...`
-    static let webAssets: HookName = "web-assets"
+//    static let webAssets: HookName = "web-assets"
     
-    static let webCss: HookName = "web-css"
-    static let webJs: HookName = "web-js"
+//    static let webCss: HookName = "web-css"
+//    static let webJs: HookName = "web-js"
 }
 
 public struct WebApi {
