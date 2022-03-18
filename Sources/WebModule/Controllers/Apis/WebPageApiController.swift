@@ -8,7 +8,7 @@
 import Vapor
 import Feather
 import Fluent
-import WebApi
+import WebObjects
 
 extension Web.Page.List: Content {}
 extension Web.Page.Detail: Content {}

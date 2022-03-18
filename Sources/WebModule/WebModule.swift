@@ -8,8 +8,8 @@
 import Vapor
 import Fluent
 import Feather
-import FeatherApi
-import WebApi
+import FeatherObjects
+import WebObjects
 
 struct WebModule: FeatherModule {
     

@@ -7,8 +7,8 @@
 
 import Vapor
 import Feather
-import FeatherApi
-import WebApi
+import FeatherObjects
+import WebObjects
 
 
 struct WebRouter: FeatherRouter {

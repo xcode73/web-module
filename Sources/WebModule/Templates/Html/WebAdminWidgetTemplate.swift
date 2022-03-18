@@ -9,7 +9,7 @@ import Vapor
 import Feather
 import SwiftHtml
 import FeatherIcons
-import WebApi
+import WebObjects
 
 struct WebAdminWidgetTemplate: TemplateRepresentable {
  

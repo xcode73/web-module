@@ -5,7 +5,7 @@
 //  Created by Tibor Bodecs on 2021. 12. 23..
 //
 
-import FeatherApi
+import FeatherObjects
 
 public struct WebRssContext {
 

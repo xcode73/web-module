@@ -11,14 +11,12 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/feathercms/feather-core", .branch("dev")),
-        .package(url: "https://github.com/feathercms/feather-api", .branch("main")),
-        .package(url: "https://github.com/feathercms/web-api", .branch("main")),
+        .package(url: "https://github.com/feathercms/web-objects", .branch("main")),
     ],
     targets: [
         .target(name: "WebModule", dependencies: [
-                .product(name: "FeatherApi", package: "feather-api"),
-                .product(name: "WebApi", package: "web-api"),
                 .product(name: "Feather", package: "feather-core"),
+                .product(name: "WebObjects", package: "web-objects"),
             ],
             resources: [
                 .copy("Bundle"),

@@ -8,7 +8,7 @@
 import Vapor
 import Feather
 import Fluent
-import WebApi
+import WebObjects
 
 struct WebMenuAdminController: AdminController {
     typealias ApiModel = Web.Menu

@@ -8,7 +8,7 @@
 import Vapor
 import Feather
 import Fluent
-import WebApi
+import WebObjects
 
 extension Web.Menu.List: Content {}
 extension Web.Menu.Detail: Content {}

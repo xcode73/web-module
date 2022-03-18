@@ -8,7 +8,7 @@
 import Foundation
 import Fluent
 import Feather
-import FeatherApi
+import FeatherObjects
 
 final class WebPageModel: FeatherDatabaseModel {
     typealias Module = WebModule
