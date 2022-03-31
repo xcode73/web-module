@@ -6,14 +6,15 @@
 //
 
 import Vapor
+import Fluent
 import Feather
 
 struct WebMenuItemRepository: FeatherModelRepository {
     typealias DatabaseModel = WebMenuItemModel
 
-    public private(set) var req: Request
+    public private(set) var db: Database
     
-    init(_ req: Request) {
-        self.req = req
+    init(_ db: Database) {
+        self.db = db
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Vapor
+import Fluent
 import Feather
 
 public extension HookName {
@@ -23,19 +24,19 @@ public extension HookName {
 }
 
 public struct WebApi {
-    private var req: Request
+    private var db: Database
     
-    public var menu: WebMenuApi { .init(.init(req)) }
-    public var menuItem: WebMenuItemApi { .init(.init(req)) }
-    public var page: WebPageApi { .init(.init(req)) }
+    public var menu: WebMenuApi { .init(.init(db)) }
+    public var menuItem: WebMenuItemApi { .init(.init(db)) }
+    public var page: WebPageApi { .init(.init(db)) }
 
-    init(_ req: Request) {
-        self.req = req
+    init(_ db: Database) {
+        self.db = db
     }
 }
 
 public extension Request {
 
-    var web: WebApi { .init(self) }
+    var web: WebApi { .init(db) }
 }
 
