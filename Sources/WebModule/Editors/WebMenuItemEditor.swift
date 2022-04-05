@@ -57,10 +57,5 @@ struct WebMenuItemEditor: FeatherModelEditor {
         InputField("permission")
             .read { $1.output.context.value = model.permission }
             .write { model.permission = $1.input }
-        
-        TextareaField("notes")
-            .read { $1.output.context.value = model.permission }
-            .write { model.permission = $1.input }
-        
     }
 }
