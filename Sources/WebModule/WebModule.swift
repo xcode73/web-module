@@ -28,7 +28,7 @@ struct WebModule: FeatherModule {
         app.hooks.register(.installPermissions, use: installUserPermissionsHook)
         app.hooks.register(.apiRoutes, use: router.apiRoutesHook)
         app.hooks.register(.adminRoutes, use: router.adminRoutesHook)
-        app.hooks.register(.adminWidgets, use: adminWidgetsHook)
+        app.hooks.registerAsync(.adminWidgets, use: adminWidgetsHookAsync)
         
         app.hooks.registerAsync(.menu, use: menuHook)
         app.hooks.registerAsync(.install, use: installHook)
@@ -196,7 +196,13 @@ struct WebModule: FeatherModule {
         }
     }
 
-    func adminWidgetsHook(args: HookArguments) -> [TemplateRepresentable] {
+    func adminWidgetsHookAsync(args: HookArguments) async throws -> [TemplateRepresentable] {
+        guard
+            let widgetGroup = args["widgetGroup"] as? WidgetGroup,
+            widgetGroup.id == "system"
+        else {
+            return []
+        }
         if args.req.checkPermission(Web.permission(for: .detail)) {
             return [
                 WebAdminWidgetTemplate()
@@ -204,5 +210,6 @@ struct WebModule: FeatherModule {
         }
         return []
     }
+    
 
 }
