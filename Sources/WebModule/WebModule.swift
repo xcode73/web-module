@@ -197,12 +197,6 @@ struct WebModule: FeatherModule {
     }
 
     func adminWidgetsHookAsync(args: HookArguments) async throws -> [TemplateRepresentable] {
-        guard
-            let widgetGroup = args["widgetGroup"] as? WidgetGroup,
-            widgetGroup.id == "system"
-        else {
-            return []
-        }
         if args.req.checkPermission(Web.permission(for: .detail)) {
             return [
                 WebAdminWidgetTemplate()
