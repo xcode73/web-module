@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "web-module",
     platforms: [
-       .macOS(.v12)
+        .macOS(.v10_15)
     ],
     products: [
         .library(name: "WebModule", targets: ["WebModule"]),
