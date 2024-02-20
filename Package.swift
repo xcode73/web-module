@@ -10,8 +10,8 @@ let package = Package(
         .library(name: "WebModule", targets: ["WebModule"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/feathercms/feather-core", .branch("dev")),
-        .package(url: "https://github.com/feathercms/web-objects", .branch("main")),
+        .package(url: "https://github.com/xcode73/feather-core", .branch("test-dev")),
+        .package(url: "https://github.com/xcode73/web-objects", .branch("test-dev")),
     ],
     targets: [
         .target(name: "WebModule", dependencies: [
